@@ -13,10 +13,18 @@ const UserStore = createStore({
         }
     },
     actions:{
-        AUTHENTICATE(context)
+        AUTHENTICATE(context,credentials)
         {
           API.get('sanctum/csrf-cookie').then((res:Object) => {
-                console.log(res);
+                API.post('api/login',credentials)
+                .then((res) => {
+                    if(res && res.status == 200)
+                    {
+                        console.log("login");
+                    }
+                }).catch((error) => {
+                    return Promise.reject(error);
+                })
           })
         }
     }

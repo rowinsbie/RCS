@@ -13,4 +13,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $guarded = [];
+
+    public function getAuthPassword(){  
+        return $this->confirmed_password;
+    }
 }
