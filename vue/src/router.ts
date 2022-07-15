@@ -1,4 +1,4 @@
-import { createWebHistory,createRouter } from "vue-router";
+import { createWebHistory,createRouter, RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 import Login from './pages/Login.vue';
 import HomePage from './pages/HomePage.vue';
 
@@ -11,7 +11,8 @@ const routes = [
     {
         path:"/homepage",
         name:"homepage",
-        component:HomePage
+        component:HomePage,
+        meta:{requiresAuth:true}
     }
 ]
 
@@ -19,5 +20,15 @@ const router = createRouter({
     history:createWebHistory(),
     routes
 });
+
+
+router.beforeEach((to:RouteLocationNormalized,from:RouteLocationNormalized,next:NavigationGuardNext) => {
+        if(to.meta.requiresAuth)
+        {
+            next({name:'login'});
+        } else {
+            next();
+        }
+})
 
 export default router;
