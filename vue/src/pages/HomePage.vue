@@ -1,11 +1,30 @@
-<script setup lang="ts">
-
+<script  lang="ts">
+import UserStore from "../statemanagement/UserStore";
+import UserCard from '../components/user/UserCard.vue';
+export default {
+  components:{
+    UserCard
+  },
+  mounted() {
+    UserStore.dispatch("GET_USERS");
+  },
+  computed: {
+    UserData() {
+      return UserStore.getters.getUserData;
+    },
+  },
+};
 </script>
 
 <template>
-  <h1>this is home page</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <UserCard class="mt-4" :user="UserData" />
+    </div>
+  </div>
+</div>
 </template>
 
 <style scoped>
-
 </style>

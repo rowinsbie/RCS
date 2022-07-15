@@ -6,7 +6,8 @@ const UserStore = createStore({
     {
         return {
             token:localStorage.getItem('token'),
-            isCredentialValid:true
+            isCredentialValid:true,
+            user:[]
         }
     },
     mutations:{
@@ -16,6 +17,10 @@ const UserStore = createStore({
         isCredentialsValid(state,status)
         {
             state.isCredentialValid = status;
+        },
+        setUserData(state,data)
+        {
+            state.user = data;
         }
     },
     actions:{
@@ -42,6 +47,14 @@ const UserStore = createStore({
                 })
                
           })
+        },
+        GET_USERS(context)
+        {
+            API.get('api/user').then(res => {
+                context.commit('setUserData',res.data);
+            }).catch(error => {
+                return Promise.reject(error);
+            })
         }
     },
     getters:{
@@ -52,6 +65,10 @@ const UserStore = createStore({
         credentialsValidity(state)
         {
             return state.isCredentialValid;
+        },
+        getUserData(state)
+        {
+            return state.user;
         }
     }
 });
