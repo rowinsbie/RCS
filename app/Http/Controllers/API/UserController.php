@@ -4,7 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 
+use App\Models\User;
+use Hash;
 class UserController extends Controller
 {
     /**
@@ -14,7 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return Response()->json([
+            'users'=>User::all()
+        ]);
     }
 
     /**
@@ -33,9 +39,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        try
+        {
+            $request['nominated_password'] = Hash::make($request['nominated_password']);
+            $request['confirmed_password'] = Hash::make($request['confirmed_password']);
+
+            $isCreated = User::create($request->all());
+            if($isCreated)
+            {
+                return Response()->json($isCreated);
+            }
+        } catch(Exception  $e)
+        {
+            return $e->getMessage();
+        }
+       
     }
 
     /**
@@ -46,7 +66,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        // check user existence
+        $user = User::find($id);
+        if(!$user)
+        {
+            return abort(404);
+        }
+
+        return Response()->json([
+            'user'=>$user
+        ]);
     }
 
     /**
@@ -57,7 +86,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -67,9 +96,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+        if(!$user)
+        {
+            abort(404);
+        }
+
+        if(!$user->update($request->all()))
+        {
+            abort(500,"something went wrong");
+        }
+
+        return Response()->json([
+            'message'=>"User has been updated"
+        ]);
+        
     }
 
     /**
@@ -80,6 +123,19 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        if(!$user)
+        {
+            abort(404);
+        }
+
+        if(!$user->delete())
+        {
+            abort(500,"something went wrong");
+        }
+
+        return Response()->json([
+            'message'=>"User has been deleted"
+        ]);
     }
 }
