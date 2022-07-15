@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-body">
-    <h2>Sign In</h2>
+    <h2>Sign In </h2>
     <hr>
       <form method="POST" >
         <div class="form-group mt-3">
@@ -14,6 +14,9 @@
         </div>
           <div class="form-group mt-3">
            <button v-on:click="SIGN_IN()" class="btn btn-primary form-control" type="button">Continue</button>
+        </div>
+        <div v-if="!isCredentialsCorrect" class="form-group mt-4 text-center">
+              <span class="badge bg-danger">Email or Password is incorrect</span>
         </div>
     </form>
     </div>
@@ -28,15 +31,25 @@ export default {
       credentials:{
         email:null,
         password:null
-      }
+      },
+      
     }
   },
     methods:{
         SIGN_IN()
         {
-          console.log(this.credentials);
-          UserStore.dispatch('AUTHENTICATE');
+          UserStore.dispatch('AUTHENTICATE',this.credentials);
         }
+    },
+    computed:{
+      isLoggedIn()
+      {
+        return UserStore.getters.isAuth;
+      },
+      isCredentialsCorrect()
+      {
+        return UserStore.getters.credentialsValidity;
+      }
     }
 }
 </script>
