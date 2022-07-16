@@ -8,6 +8,9 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
+          <router-link class="nav-link" to="homepage">Home</router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" to="users">Users</router-link>
         </li>
         <li class="nav-item">

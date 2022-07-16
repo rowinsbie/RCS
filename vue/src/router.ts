@@ -1,6 +1,7 @@
 import { createWebHistory,createRouter, RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 import Login from './pages/Login.vue';
 import HomePage from './pages/HomePage.vue';
+import UserPage from './pages/UsersPage.vue';
 import UserStore from './statemanagement/UserStore';
 const routes = [
     {
@@ -9,11 +10,17 @@ const routes = [
         component:Login
     },
     {
+        path:"/users",
+        name:"users",
+        component:UserPage,
+        meta:{requiresAuth:true}
+    },
+    {
         path:"/homepage",
         name:"homepage",
         component:HomePage,
         meta:{requiresAuth:true}
-    }
+    },
 ]
 
 const router = createRouter({
