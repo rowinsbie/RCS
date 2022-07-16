@@ -25,8 +25,12 @@ class LoginController extends Controller
         ]);
     }
 
-    public function Logout(Request $request)
+    public function LogOut()
     {
-
+        
+       Auth()->user()->tokens()->delete();
+       return Response()->json([
+        'message'=>"Logged out successfully"
+       ]);
     }
 }

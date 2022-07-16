@@ -34,9 +34,8 @@ const UserStore = createStore({
                     {
                         localStorage.setItem('token',response.data.token);
                         context.commit('setToken',response.data.token);
-                        router.push({
-                            name:'homepage'
-                        });
+                        location.href = "/homepage";
+
                     }
                 }).catch((error) => {
                     if(error.response.status === 422)
@@ -55,6 +54,22 @@ const UserStore = createStore({
             }).catch(error => {
                 return Promise.reject(error);
             })
+        },
+        LOG_OUT(contex)
+        {
+            API.post('api/log-out')
+            .then(res => {
+               if(res && res.status == 200)
+               {
+
+                    location.href = "/login";
+                
+               }
+            }).catch(err => {
+                console.log(err);
+            });
+
+            localStorage.clear();
         }
     },
     getters:{

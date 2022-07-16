@@ -15,7 +15,7 @@
 
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Log Out</a>
+         <LogOut />
         </li>
       </ul>
     </div>
@@ -23,7 +23,11 @@
 </nav>
 </template>
 <script>
+import LogOut from './../buttons/LogOut.vue';
 export default {
+    components:{
+        LogOut
+    },
    mounted()
    {
     console.log("yesh")
