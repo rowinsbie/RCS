@@ -8,7 +8,8 @@ const RoleStore = createStore({
     {
         return {
             Roles:[],
-            errors:[]
+            errors:[],
+            updateError:[]
         }
     },
    
@@ -20,9 +21,36 @@ const RoleStore = createStore({
         setErrors(state,errors)
         {
             state.errors = errors;
+        },
+        setUpdateError(state,errors)
+        {
+            state.updateError = errors;
         }
     },
     actions:{
+        updateRole({commit,dispatch},data)
+        {
+            API.put(`api/role/${data.id}`,{
+                role_name:data.role_name,
+                description:data.description
+            }).then(res => {
+                if(res && res.status == 200)
+                {
+                    commit('setUpdateError',[]);
+                    Swal.fire({
+                        title:"Updated",
+                        text:"A role has been updated",
+                        icon:"success"
+                    }).then(() => {
+                        dispatch('getRoles');
+                    });
+                }
+
+            }).catch(error => {
+                commit('setUpdateError',error.response.data.errors)
+                return Promise.reject(error);
+            });
+        },
         deleteRole({commit,dispatch},id)
         {
             API.delete('api/role/'+id)
@@ -82,6 +110,10 @@ const RoleStore = createStore({
         getErrors(state)
         {
             return state.errors;
+        },
+        getUpdateErrors(state)
+        {
+            return state.updateError;
         }
     }
 

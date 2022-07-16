@@ -1,5 +1,5 @@
 <template>
-  <button type="button" v-on:click="deleteRole()" class="btn btn-danger">
+  <button type="button" v-on:click="deleteRole()" class="btn border">
     Delete
   </button>
 </template>
