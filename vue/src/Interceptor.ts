@@ -1,5 +1,5 @@
 import API from "./axios";
-
+import UserStore from "./statemanagement/UserStore";
 
 export default function Interceptor()
 {
@@ -12,9 +12,9 @@ export default function Interceptor()
 
 
         API.interceptors.response.use(response => {
-            if(response.status == 401 || !localStorage.getItem('token'))
+            if(response.status == 401)
             {
-                console.log('unauthorized');
+                UserStore.dispatch('LOG_OUT');
                 localStorage.clear();
             }
             return response;

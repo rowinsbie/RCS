@@ -2,6 +2,8 @@ import { createWebHistory,createRouter, RouteLocationNormalized, NavigationGuard
 import Login from './pages/Login.vue';
 import HomePage from './pages/HomePage.vue';
 import UserPage from './pages/UsersPage.vue';
+import RolePage from './pages/RolePage.vue';
+
 import UserStore from './statemanagement/UserStore';
 const routes = [
     {
@@ -13,6 +15,12 @@ const routes = [
         path:"/users",
         name:"users",
         component:UserPage,
+        meta:{requiresAuth:true}
+    },
+    {
+        path:"/roles",
+        name:"RolePage",
+        component:RolePage,
         meta:{requiresAuth:true}
     },
     {
