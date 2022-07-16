@@ -7,7 +7,8 @@ const UserStore = createStore({
         return {
             token:localStorage.getItem('token'),
             isCredentialValid:true,
-            user:[]
+            user:[],
+            errors:[]
         }
     },
     mutations:{
@@ -21,6 +22,10 @@ const UserStore = createStore({
         setUserData(state,data)
         {
             state.user = data;
+        },
+        setErrors(state,errors)
+        {
+            state.errors = errors;
         }
     },
     actions:{
