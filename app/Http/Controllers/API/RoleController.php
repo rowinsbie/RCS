@@ -87,6 +87,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Roles::find($id)->delete();
+        if($delete)
+        {
+            return Response()->json([
+                'message'=>"The role has been deleted"
+            ]);
+        }
     }
 }

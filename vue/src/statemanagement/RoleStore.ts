@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import API from '../axios';
 import router from "../router";
+import Swal from "sweetalert2";
+
 const RoleStore = createStore({
     state()
     {
@@ -21,16 +23,41 @@ const RoleStore = createStore({
         }
     },
     actions:{
-        createNewRole(context,data)
+        deleteRole({commit,dispatch},id)
+        {
+            API.delete('api/role/'+id)
+            .then(res => {
+                if(res && res.status == 200)
+                {
+                    Swal.fire({
+                        title:"Deleted",
+                        text:"The role has been deleted successfully",
+                        icon:"success"
+                    }).then(() => {
+                        dispatch('getRoles');
+                    });
+                }
+            }).catch(err => {
+                return Promise.reject(err);
+            });
+        },
+        createNewRole({commit,dispatch},data)
         {
             API.post('api/role',data).then(res => {
-                if(res)
+                if(res && res.status == 200)
                 {
-                    context.commit('setErrors',[]);
+                    commit('setErrors',[]);
+                    Swal.fire({
+                        title:"New Role",
+                        text:"A role has been created",
+                        icon:"success"
+                    }).then(() => {
+                        dispatch('getRoles');
+                    });
                 }
 
             }).catch(error => {
-                context.commit('setErrors',error.response.data.errors)
+                commit('setErrors',error.response.data.errors)
                 return Promise.reject(error);
             });
         },

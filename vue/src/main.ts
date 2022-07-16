@@ -7,6 +7,5 @@ import Interceptor from './Interceptor';
 Interceptor();
 
 createApp(App)
-// .use(Interceptor)
 .use(router)
 .mount('#app')

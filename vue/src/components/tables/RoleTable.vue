@@ -14,7 +14,9 @@
                             <tr v-for="(data) in getRoles" :key="data.id">
                                 <td>{{data.role_name}}</td>
                                  <td>{{data.description}}</td>
-                                 <td></td>
+                                 <td>
+                                    <Delete :role_id="data.id" />
+                                 </td>
                             </tr>
                         </tbody>
                     </table>
@@ -24,10 +26,14 @@
 </template>
 <script>
 import RoleStore from './../../statemanagement/RoleStore';
+import Delete from '../buttons/Roles/Delete.vue';
 export default {
-    
+    components:{
+        Delete
+    },
     mounted()
     {
+       
        RoleStore.dispatch("getRoles");
     },
     computed:{
