@@ -28,6 +28,7 @@
 
                 </div>
                 <div class="form-group mt-4">
+                <label for="role">Role</label>
                     <select v-model="role_id" name="role" id="role" class="form-control">
                         <option value="">Select Role</option>
                         <option v-for="(data) in roleList" :key="data.id" :value="data.id" >

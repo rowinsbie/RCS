@@ -63,8 +63,8 @@ export default {
   data() {
     return {
       showModal: false,
-      role_name:null,
-      description:null
+      role_name:this.data.role_name,
+      description:this.data.description
     };
   },
   methods: {
@@ -75,7 +75,6 @@ export default {
             role_name:this.role_name,
             description:this.description
         });
-        this.close();
     },
     openEdit() {
       $vfm.show("edit");

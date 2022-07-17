@@ -11,7 +11,8 @@ const UserStore = createStore({
             isCredentialValid:true,
             user:[],
             userList:[],
-            errors:[]
+            errors:[],
+            updateErrors:[]
         }
     },
     mutations:{
@@ -29,6 +30,10 @@ const UserStore = createStore({
         setErrors(state,errors)
         {
             state.errors = errors;
+        },
+        setUpdateErrors(state,errors)
+        {
+            state.updateErrors = errors;
         },
         setUserList(state,data)
         {
@@ -111,6 +116,32 @@ const UserStore = createStore({
                 return Promise.reject(error);
             })
         },
+        UPDATE_USER({commit,dispatch},data)
+        {
+            API.put(`api/users/${data.id}`,{
+                role_id:data.role_id,
+                fullname:data.fullname,
+                email:data.email,
+                
+            }).then(res => {
+                if(res && res.status == 200)
+                {
+                    commit('setUpdateErrors',[]);
+                    Swal.fire({
+                        title:"Updated",
+                        text:"A user has been updated",
+                        icon:"success"
+                    }).then(() => {
+                        dispatch('GET_USERS_LIST');
+                    });
+                }
+                
+
+            }).catch(error => {
+                commit('setUpdateErrors',error.response.data.errors)
+                return Promise.reject(error);
+            });
+        },
         DELETE_USER({commit,dispatch},id)
         {
             API.delete(`api/users/${id}`)
@@ -137,6 +168,10 @@ const UserStore = createStore({
         getErrors(state)
         {
             return state.errors;
+        },
+        getUpdateErrors(state)
+        {
+            return state.updateErrors;
         },
         credentialsValidity(state)
         {

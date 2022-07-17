@@ -15,6 +15,7 @@
                                 <td>{{data.fullname}}</td>
                                  <td>{{data.email}}</td>
                                  <td style="display:flex">
+                                 <Edit :data="data" />
                                   <Delete :user_id="data.id" />
                                    
                                  </td>
@@ -29,9 +30,12 @@
 
 import UserStore from './../../statemanagement/UserStore';
 import Delete from '../buttons/users/Delete.vue';
+import Edit from '../buttons/users/Edit.vue';
+
 export default {
     components:{
-       Delete
+       Delete,
+       Edit
     },
     mounted()
     {

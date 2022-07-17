@@ -104,7 +104,11 @@ class UserController extends Controller
             abort(404);
         }
 
-        if(!$user->update($request->all()))
+        if(!$user->update([
+            'fullname'=>$request['fullname'],
+            'email'=>$request['email'],
+            'role_id'=>$request['role_id'],
+        ]))
         {
             abort(500,"something went wrong");
         }
