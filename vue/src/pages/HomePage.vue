@@ -6,7 +6,7 @@ export default {
     UserCard
   },
   mounted() {
-    UserStore.dispatch("GET_USERS");
+    UserStore.dispatch("GET_USER");
   },
   computed: {
     UserData() {

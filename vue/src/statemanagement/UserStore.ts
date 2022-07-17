@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import API from '../axios';
 import router from "../router";
+import Swal from "sweetalert2";
+
 const UserStore = createStore({
     state()
     {
@@ -8,6 +10,7 @@ const UserStore = createStore({
             token:localStorage.getItem('token'),
             isCredentialValid:true,
             user:[],
+            userList:[],
             errors:[]
         }
     },
@@ -52,7 +55,7 @@ const UserStore = createStore({
                
           })
         },
-        GET_USERS(context)
+        GET_USER(context)
         {
             API.get('api/user').then(res => {
                 context.commit('setUserData',res.data);
@@ -60,7 +63,7 @@ const UserStore = createStore({
                 return Promise.reject(error);
             })
         },
-        LOG_OUT(contex)
+        LOG_OUT(context)
         {
             API.post('api/log-out')
             .then(res => {
@@ -75,12 +78,36 @@ const UserStore = createStore({
             });
 
             localStorage.clear();
+        },
+        CREATE_USER({commit},data)
+        {
+            API.post('api/users',data)
+            .then(res => {
+                console.log(res);
+                if(res && res.status == 200)
+                {
+                    Swal.fire({
+                        title:"New User",
+                        text:"A new user has been updated",
+                        icon:"success"
+                    }).then(() => {
+                       
+                    });
+                }
+            }).catch(err => {
+                commit("setErrors",err.response.data.errors);
+                return Promise.reject(err);
+            });
         }
     },
     getters:{
         isAuth(state)
         {
             return state.token;
+        },
+        getErrors(state)
+        {
+            return state.errors;
         },
         credentialsValidity(state)
         {
