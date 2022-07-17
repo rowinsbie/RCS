@@ -1,22 +1,21 @@
 <template>
     <div class="card">
         <div class="card-body">
-                <h3>Role List</h3>
+                <h3>User List </h3>
                 <hr />
                 <div class=" table-responsive">
                     <table class="table table-striped">
                         <thead>
-                            <th>Role</th>
-                            <th>Description</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Actions</th>
                         </thead>
                         <tbody>
-                            <tr v-for="(data) in getRoles" :key="data.id">
-                                <td>{{data.role_name}}</td>
-                                 <td>{{data.description}}</td>
+                            <tr v-for="(data) in UserList" :key="data.id">
+                                <td>{{data.fullname}}</td>
+                                 <td>{{data.email}}</td>
                                  <td style="display:flex">
-                                  <Edit :data="data" />
-                                    <Delete :role_id="data.id" />
+                                  
                                    
                                  </td>
                             </tr>
@@ -27,24 +26,21 @@
     </div>
 </template>
 <script>
-import RoleStore from './../../statemanagement/RoleStore';
-import Delete from '../buttons/Roles/Delete.vue';
-import Edit from '../buttons/Roles/Edit.vue';
 
+import UserStore from './../../statemanagement/UserStore';
 export default {
     components:{
-        Delete,
-        Edit
+       
     },
     mounted()
     {
+       UserStore.dispatch('GET_USERS_LIST');
        
-       RoleStore.dispatch("getRoles");
     },
     computed:{
-        getRoles()
+        UserList()
         {
-            return RoleStore.getters.showRoles;
+            return UserStore.getters.userList;
         }
     }
 }

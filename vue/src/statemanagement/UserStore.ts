@@ -29,6 +29,10 @@ const UserStore = createStore({
         setErrors(state,errors)
         {
             state.errors = errors;
+        },
+        setUserList(state,data)
+        {
+            state.userList = data;
         }
     },
     actions:{
@@ -79,7 +83,7 @@ const UserStore = createStore({
 
             localStorage.clear();
         },
-        CREATE_USER({commit},data)
+        CREATE_USER({commit,dispatch},data)
         {
             API.post('api/users',data)
             .then(res => {
@@ -91,14 +95,22 @@ const UserStore = createStore({
                         text:"A new user has been updated",
                         icon:"success"
                     }).then(() => {
-                       
+                        dispatch('GET_USERS_LIST');
                     });
                 }
             }).catch(err => {
                 commit("setErrors",err.response.data.errors);
                 return Promise.reject(err);
             });
-        }
+        },
+        GET_USERS_LIST(context)
+        {
+            API.get('api/users').then(res => {
+                context.commit('setUserList',res.data.users);
+            }).catch(error => {
+                return Promise.reject(error);
+            })
+        },
     },
     getters:{
         isAuth(state)
@@ -116,6 +128,10 @@ const UserStore = createStore({
         getUserData(state)
         {
             return state.user;
+        },
+        userList(state)
+        {
+            return state.userList;
         }
     }
 });
