@@ -4,7 +4,7 @@
          :attach="false"
 
       v-model="showModal"
-      name="edit"
+      :name="`edit${data.id}`"
     >
       <div class="container pt-5">
         <div class="row">
@@ -37,7 +37,7 @@
                     <span class="text-danger" v-if="errors.description">{{errors.description[0]}}</span>
 
                   </div>
-                  <div class="form-group">
+                  <div class="form-group mt-4">
                     <button type="button" @click="updateRole()" class="btn btn-primary">Update</button>
                     <button class="btn border" @click="close()" type="button">Cancel</button>
                   </div>
@@ -77,11 +77,11 @@ export default {
         });
     },
     openEdit() {
-      $vfm.show("edit");
+      $vfm.show(`edit${this.data.id}`);
     },
     close()
     {
-$vfm.hide("edit");
+$vfm.hide(`edit${this.data.id}`);
     }
   },
   computed:{

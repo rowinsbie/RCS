@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-final-modal :attach="false" v-model="showModal" name="edit">
+    <vue-final-modal :attach="false" v-model="showModal" :name="`edit${data.id}`">
       <div class="container pt-5">
         <div class="row">
           <div class="col-lg-4 offset-md-4">
@@ -110,10 +110,10 @@ export default {
       });
     },
     openEdit() {
-      $vfm.show("edit");
+      $vfm.show(`edit${this.data.id}`);
     },
     close() {
-      $vfm.hide("edit");
+      $vfm.hide(`edit${this.data.id}`);
     },
   },
   computed: {
