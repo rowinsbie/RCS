@@ -111,6 +111,23 @@ const UserStore = createStore({
                 return Promise.reject(error);
             })
         },
+        DELETE_USER({commit,dispatch},id)
+        {
+            API.delete(`api/users/${id}`)
+            .then(res => {
+                if(res && res.status == 200)
+                {
+                    Swal.fire({
+                        title:"Deleted",
+                        text:"The user has been deleted",
+                        icon:"success"
+                    });
+                    dispatch('GET_USERS_LIST');
+                }
+            }).catch(err => {
+                return Promise.reject(err);
+            });
+        }
     },
     getters:{
         isAuth(state)
