@@ -1,16 +1,38 @@
-# Vue 3 + TypeScript + Vite
+<img src="../documentation/img.png" width="400">
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Recommended IDE Setup
+## RCS Coding exam
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+a simple web application that allows user to login, create,update,view and delete users and roles.
 
-## Type Support For `.vue` Imports in TS
+The laravel is used as an API for this project and I've used vue js for the front end that consumes the API.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+## Installation
+<p> Run the command below to clone the project.</p>
+ <code>git clone https://github.com/rowinsbie/RCS.git</code>
+<p>Install the composer to the project</p> 
+<code>composer install</code>
+<p>go to vue folder</p>
+<code>cd vue/</code>
+<p>Install the dependecies</p>
+<code>npm install</code>
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+# Configuration
+## API Configuration
+<p>create a new .env in the root of the laravel project
+</p>
+<p>Change the SESSION_DRIVER value to cookie</p>
+<code>SESSION_DRIVER=cookie</code>
+<p>Copy paste the code below</p>
+<code>
+SESSION_DOMAIN=localhost
+</code><br />
+<code>
+SANCTUM_STATEFUL_DOMAINS=localhost:8000
+</code>
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+## Front-end .env configuration
+<p>From the root folder of the laravel project, go to vue folder</p>
+<code>cd vue/</code>
+<p>create a new file .env and copy paste below the variable for the API URL</p>
+<code>VITE_API = http://127.0.0.1:8000</code>
