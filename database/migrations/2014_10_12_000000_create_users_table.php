@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('confirmed_password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = "InnoDB";
         });
     }

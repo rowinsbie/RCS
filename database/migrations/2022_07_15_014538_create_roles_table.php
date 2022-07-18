@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('role_name');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = "InnoDB";
         });
     }
