@@ -1,4 +1,4 @@
-<img src="../documentation/img.png" width="400">
+<img src="../documentation/img.PNG" width="400">
 
 
 ## RCS Coding exam
