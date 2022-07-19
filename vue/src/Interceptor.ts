@@ -1,24 +1,37 @@
 import API from "./axios";
 import UserStore from "./statemanagement/UserStore";
+const RedirectIfUnauthorized = (status:number) => {
+    if(status === 401)
+    {
+        localStorage.clear();
+        location.href = "/login";
+    }
+}
 
 export default function Interceptor()
 {
         API.interceptors.request.use(request => {
+          
               return request;
         },
         error => {
+            if(error.response.status)
+            {
+                RedirectIfUnauthorized(error.response.status);
+            }
            return Promise.reject(error);
         });
 
 
         API.interceptors.response.use(response => {
-            if(response.status == 401)
-            {
-                UserStore.dispatch('LOG_OUT');
-                localStorage.clear();
-            }
+           
             return response;
         },error => {
+          
+            if(error.response.status)
+            {
+                RedirectIfUnauthorized(error.response.status);
+            }
             return Promise.reject(error);
         });
 
