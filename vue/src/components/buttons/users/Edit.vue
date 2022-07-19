@@ -108,6 +108,7 @@ export default {
         email: this.email,
         role_id: this.role_id,
       });
+      
     },
     openEdit() {
       $vfm.show(`edit${this.data.id}`);

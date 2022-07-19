@@ -42,7 +42,7 @@ const RoleStore = createStore({
                         text:"A role has been updated",
                         icon:"success"
                     }).then(() => {
-                        dispatch('getRoles');
+                        location.reload();
                     });
                 }
 

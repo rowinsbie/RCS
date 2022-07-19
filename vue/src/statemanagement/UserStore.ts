@@ -132,7 +132,7 @@ const UserStore = createStore({
                         text:"A user has been updated",
                         icon:"success"
                     }).then(() => {
-                        dispatch('GET_USERS_LIST');
+                        location.reload();
                     });
                 }
                 

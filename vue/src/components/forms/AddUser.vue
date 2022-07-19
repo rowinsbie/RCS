@@ -6,30 +6,30 @@
             <form method="POST">
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" v-model="fullname" name="fullname" class="form-control" id="fullname" />
+                <input type="text" v-model="user.fullname" name="fullname" class="form-control" id="fullname" />
                 <span class="text-danger" v-if="errors.fullname">{{errors.fullname[0]}}</span>
                 </div>
                 <div class="form-group mt-4">
                 <label for="email">Email</label>
-                <input v-model="email" type="email" name="email" class="form-control" id="email" />
+                <input v-model="user.email" type="email" name="email" class="form-control" id="email" />
                                 <span class="text-danger" v-if="errors.email">{{errors.email[0]}}</span>
 
                 </div>
                 <div class="form-group mt-4">
                 <label for="nominated">Nominated Password</label>
-                <input v-model="nominated_password" type="password" name="nominated_password" class="form-control" id="nominated_password" />
+                <input v-model="user.nominated_password" type="password" name="nominated_password" class="form-control" id="nominated_password" />
                 <span class="text-danger" v-if="errors.nominated_password">{{errors.nominated_password[0]}}</span>
 
                 </div>
                    <div class="form-group mt-4">
                 <label for="confirmed">Confirmed Password</label>
-                <input v-model="confirmed_password" type="password" name="confirmed_password" class="form-control" id="confirmed_password" />
+                <input v-model="user.confirmed_password" type="password" name="confirmed_password" class="form-control" id="confirmed_password" />
                 <span class="text-danger" v-if="errors.confirmed_password">{{errors.confirmed_password[0]}}</span>
 
                 </div>
                 <div class="form-group mt-4">
                 <label for="role">Role</label>
-                    <select v-model="role_id" name="role" id="role" class="form-control">
+                    <select v-model="user.role_id" name="role" id="role" class="form-control">
                         <option value="">Select Role</option>
                         <option v-for="(data) in roleList" :key="data.id" :value="data.id" >
                             {{data.role_name}}
@@ -53,23 +53,26 @@ export default {
     data()
     {
         return {
-            fullname:null,
+            user:{
+                  fullname:null,
             email:null,
             nominated_password:null,
             confirmed_password:null,
             role_id:null
+            }
         }
     },
     methods:{
         CreateUser()
         {
             UserStore.dispatch('CREATE_USER',{
-                fullname:this.fullname,
-                email:this.email,
-                nominated_password:this.nominated_password,
-                confirmed_password:this.confirmed_password,
-                role_id:this.role_id
+                fullname:this.user.fullname,
+                email:this.user.email,
+                nominated_password:this.user.nominated_password,
+                confirmed_password:this.user.confirmed_password,
+                role_id:this.user.role_id
             });
+            this.user = {};
         }
     },
     mounted()

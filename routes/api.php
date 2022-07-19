@@ -23,8 +23,9 @@ Route::middleware('auth:sanctum')->group(function()
         return $request->user();
     });
 Route::post('log-out',[LoginController::class,"LogOut"]);
-});
-
 Route::apiResource('users',UserController::class);
 Route::apiResource('role',RoleController::class);
+});
+
+
 Route::post('authenticate',[LoginController::class,"Login"]);
